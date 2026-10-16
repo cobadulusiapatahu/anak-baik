@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+*.db
+instance/
+.env*
+!.env.example
+venv/
+.venv/
+
+# Uploaded kid photos stay local; keep only the generic default avatar
+app/static/assets/kids/*
+!app/static/assets/kids/default_kid.svg

@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h2>{{ kid.name }}'s Profile</h2>
+    <img src="{{ url_for('static', filename='assets/kids/' + kid.photo) }}" alt="{{ kid.name }}" class="kid-avatar">
+    <p>Total Points: {{ kid.points }}</p>
+
+    <h3>Tasks</h3>
+    <ul class="task-list">
+    {% for task in tasks %}
+        <li>
+            <img src="{{ url_for('static', filename='assets/tasks/' + task.icon) }}" alt="{{ task.name }}" class="task-icon">
+            {{ task.name }} ({{ task.points }} points)
+            <form action="{{ url_for('main.add_points', kid_id=kid.id, task_id=task.id) }}" method="post">
+                <button type="submit" class="button">Complete</button>
+            </form>
+        </li>
+    {% endfor %}
+    </ul>
+
+    <h3>Available Rewards</h3>
+    <ul class="reward-list">
+    {% for reward in rewards %}
+        <li>
+            <img src="{{ url_for('static', filename='assets/rewards/' + reward.icon) }}" alt="{{ reward.name }}" class="reward-icon">
+            {{ reward.name }} (Cost: {{ reward.cost }} points)
+            <form action="{{ url_for('main.redeem_reward', kid_id=kid.id, reward_id=reward.id) }}" method="post">
+                <button type="submit" class="button" {% if kid.points < reward.cost %}disabled{% endif %}>Redeem</button>
+            </form>
+        </li>
+    {% endfor %}
+    </ul>
+{% endblock %}
